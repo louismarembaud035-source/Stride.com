@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { catalogue, calculateWorkoutMetrics, WorkoutProgram } from '@/data/database';
+import { catalogue, calculateWorkoutMetrics, WorkoutProgram } from '../../data/database';
 
 export default function CatalogPage() {
   const [currentLocFilter, setCurrentLocFilter] = useState<string>('all');
@@ -31,7 +31,6 @@ export default function CatalogPage() {
         <p>Choisis un programme adapté à ton lieu de pratique et à ton format.</p>
       </div>
 
-      {/* Filtres par lieu */}
       <div className="flex flex-col gap-2">
         <span className="text-xs font-semibold text-[var(--text-secondary)]">Lieu d'entraînement</span>
         <div id="filter-location" className="flex gap-2 flex-wrap">
@@ -51,7 +50,6 @@ export default function CatalogPage() {
         </div>
       </div>
 
-      {/* Filtres par format / nombre d'exercices */}
       <div className="flex flex-col gap-2">
         <span className="text-xs font-semibold text-[var(--text-secondary)]">Format de séance</span>
         <div id="filter-exo-count" className="flex gap-2 flex-wrap">
@@ -81,7 +79,6 @@ export default function CatalogPage() {
         <span className="font-bold text-[var(--text-primary)]">{filtered.length} séance(s) trouvée(s)</span>
       </div>
 
-      {/* Grille des séances */}
       <div className="grid grid-cols-1 gap-3">
         {filtered.map(prog => {
           const metrics = calculateWorkoutMetrics(prog.exos, prog.reposSerie, prog.reposExo);
@@ -108,7 +105,6 @@ export default function CatalogPage() {
         })}
       </div>
 
-      {/* Modal / Panneau de détail de la séance sélectionnée */}
       {activeWorkout && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="modern-card max-w-[480px] w-full max-h-[90vh] overflow-y-auto bg-[var(--bg-surface)] border-[var(--border-strong)]">
@@ -150,7 +146,7 @@ export default function CatalogPage() {
 
             <button
               onClick={() => {
-                alert(`L'entraînement "${activeWorkout.titre}" est prêt. (Mode guidé bientôt disponible dans ton projet Next.js)`);
+                alert(`L'entraînement "${activeWorkout.titre}" est prêt.`);
                 setActiveWorkout(null);
               }}
               className="hero-cta text-center justify-center"
