@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FOOD_DATABASE, FoodItem } from '@/data/database';
+import { FOOD_DATABASE, FoodItem } from '../../data/database';
 
 interface LoggedFood {
   nom: string;
@@ -118,7 +118,6 @@ export default function TrackerPage() {
         <p>Ajuste tes apports et surveille ton solde énergétique quotidien.</p>
       </div>
 
-      {/* Résumé principal */}
       <div className="modern-card tracker-summary-card">
         <div className="tracker-equation-row">
           <div className="tracker-stat-box">
@@ -156,7 +155,6 @@ export default function TrackerPage() {
           </div>
         </div>
 
-        {/* Répartition des macros */}
         <div className="macros-breakdown-box">
           <div className="macro-labels">
             <span>Protéines: <b id="macro-prot-val">{totalProt}</b>g / 140g</span>
@@ -171,7 +169,6 @@ export default function TrackerPage() {
         </div>
       </div>
 
-      {/* Recherche et Ajout d'aliments */}
       <div className="modern-card">
         <div className="section-title mb-3">
           <h3>Ajouter un aliment</h3>
@@ -197,7 +194,6 @@ export default function TrackerPage() {
           )}
         </div>
 
-        {/* Panneau de portion sélectionnée */}
         {selectedFood && (
           <div className="portion-panel mt-3">
             <div className="selected-food-meta">
@@ -223,7 +219,6 @@ export default function TrackerPage() {
           </div>
         )}
 
-        {/* Favoris rapides */}
         <div className="mt-4">
           <span className="filter-section-label block mb-2">Favoris rapides</span>
           <div className="favorites-chips-stack">
@@ -240,7 +235,6 @@ export default function TrackerPage() {
         </div>
       </div>
 
-      {/* Liste des repas enregistrés */}
       <div className="modern-card logged-meals-section">
         <div className="meals-header">
           <h4>Repas du jour (<span id="logged-items-count">{loggedFoods.length}</span>)</h4>
