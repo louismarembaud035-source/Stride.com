@@ -20,8 +20,8 @@ export default function CatalogPage() {
   });
 
   return (
-    <div className="w-full max-w-[520px] mx-auto flex flex-col gap-6 p-4 text-slate-100 min-h-screen pb-24">
-      {/* Top bar */}
+    <div className="flex flex-col gap-6">
+      {/* Top Bar */}
       <div className="flex justify-between items-center">
         <Link href="/" className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-800 transition-all">
           ← Accueil
@@ -32,14 +32,14 @@ export default function CatalogPage() {
       </div>
 
       {/* Heading */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1.5">
         <h1 className="text-2xl font-black tracking-tight text-white">Catalogue des séances</h1>
         <p className="text-xs text-slate-400">Programmes complets avec durée et dépense calorique estimées.</p>
       </div>
 
       {/* Filtre Volume d'exercices */}
-      <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Volume d'exercices</span>
+      <div className="flex flex-col gap-2.5">
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Volume d'exercices</span>
         <div className="flex flex-wrap gap-2">
           {[
             { id: 'all', label: 'Tous volumes' },
@@ -52,8 +52,8 @@ export default function CatalogPage() {
               onClick={() => setCurrentExoCountFilter(f.id)}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 currentExoCountFilter === f.id
-                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-500/20'
-                  : 'bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700'
+                  ? 'bg-emerald-400 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-400/20'
+                  : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
               }`}
             >
               {f.label}
@@ -63,8 +63,8 @@ export default function CatalogPage() {
       </div>
 
       {/* Filtre Lieu d'entraînement */}
-      <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Lieu d'entraînement</span>
+      <div className="flex flex-col gap-2.5">
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Lieu d'entraînement</span>
         <div className="flex flex-wrap gap-2">
           {[
             { id: 'all', label: 'Tous lieux' },
@@ -77,8 +77,8 @@ export default function CatalogPage() {
               onClick={() => setCurrentLocFilter(l.id)}
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 currentLocFilter === l.id
-                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-500/20'
-                  : 'bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700'
+                  ? 'bg-emerald-400 text-slate-950 border-emerald-400 shadow-lg shadow-emerald-400/20'
+                  : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
               }`}
             >
               {l.label}
@@ -92,7 +92,7 @@ export default function CatalogPage() {
         <span className="font-bold text-slate-300">{filtered.length} séance(s) trouvée(s)</span>
       </div>
 
-      {/* Grille des séances */}
+      {/* Liste des cartes de séances */}
       <div className="flex flex-col gap-4">
         {filtered.map(prog => {
           const metrics = calculateWorkoutMetrics(prog.exos, prog.reposSerie, prog.reposExo);
@@ -100,27 +100,27 @@ export default function CatalogPage() {
             <div
               key={prog.id + prog.titre}
               onClick={() => setActiveWorkout(prog)}
-              className="relative overflow-hidden bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 cursor-pointer hover:border-cyan-500/50 transition-all shadow-xl group"
+              className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl p-6 cursor-pointer hover:border-cyan-500/50 transition-all shadow-xl group"
             >
-              {/* Barre latérale décorative */}
-              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 group-hover:bg-cyan-400 transition-colors" />
+              {/* Barre verticale verte à gauche */}
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-400" />
 
               <div className="flex justify-between items-center mb-3">
-                <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg bg-slate-950 text-cyan-400 border border-slate-800">
+                <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-slate-950 text-cyan-400 border border-slate-800">
                   {prog.lieu}
                 </span>
               </div>
 
-              <h3 className="text-base font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">
+              <h3 className="text-lg font-bold text-white mb-1.5 group-hover:text-cyan-400 transition-colors">
                 {prog.titre}
               </h3>
-              <p className="text-xs text-slate-400 mb-5">{prog.desc}</p>
+              <p className="text-xs text-slate-400 mb-6">{prog.desc}</p>
 
-              <div className="flex justify-between items-center pt-3 border-t border-slate-800/80 text-xs font-semibold text-slate-300">
+              <div className="flex justify-between items-center pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
                 <span className="flex items-center gap-1.5 text-slate-300">
                   ⏱ {metrics.minutes} min
                 </span>
-                <span className="flex items-center gap-1.5 font-bold text-emerald-400">
+                <span className="flex items-center gap-1.5 font-bold text-amber-400">
                   🔥 ~{metrics.calories} kcal
                 </span>
                 <span className="flex items-center gap-1.5 text-slate-300">
@@ -135,10 +135,10 @@ export default function CatalogPage() {
       {/* Modal de détail */}
       {activeWorkout && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-[480px] w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col gap-5">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-[480px] w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col gap-5">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400 bg-slate-950 px-3 py-1 rounded-full border border-slate-800">
                   {activeWorkout.lieu}
                 </span>
                 <h2 className="text-xl font-bold text-white mt-2">{activeWorkout.titre}</h2>
@@ -153,9 +153,9 @@ export default function CatalogPage() {
 
             <p className="text-xs text-slate-300 leading-relaxed">{activeWorkout.desc}</p>
 
-            <div className="flex justify-around p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold">
+            <div className="flex justify-around p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-semibold">
               <span className="flex items-center gap-1 text-slate-200">⏱ {calculateWorkoutMetrics(activeWorkout.exos, activeWorkout.reposSerie, activeWorkout.reposExo).minutes} min</span>
-              <span className="flex items-center gap-1 text-emerald-400 font-bold">🔥 ~{calculateWorkoutMetrics(activeWorkout.exos, activeWorkout.reposSerie, activeWorkout.reposExo).calories} kcal</span>
+              <span className="flex items-center gap-1 text-amber-400 font-bold">🔥 ~{calculateWorkoutMetrics(activeWorkout.exos, activeWorkout.reposSerie, activeWorkout.reposExo).calories} kcal</span>
               <span className="flex items-center gap-1 text-slate-200">🏆 {activeWorkout.exos.length} exos</span>
             </div>
 
@@ -165,7 +165,7 @@ export default function CatalogPage() {
               </h4>
               <div className="flex flex-col gap-2">
                 {activeWorkout.exos.map((e, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-xs p-3 bg-slate-950 rounded-xl border border-slate-800">
+                  <div key={idx} className="flex justify-between items-center text-xs p-3.5 bg-slate-950 rounded-2xl border border-slate-800">
                     <span className="font-medium text-slate-200"><b>{idx + 1}.</b> {e.nom}</span>
                     <span className="text-cyan-400 font-bold">{e.series} séries × {e.reps}</span>
                   </div>
@@ -178,7 +178,7 @@ export default function CatalogPage() {
                 alert(`L'entraînement "${activeWorkout.titre}" est lancé !`);
                 setActiveWorkout(null);
               }}
-              className="w-full py-3.5 rounded-xl bg-cyan-400 text-slate-950 font-bold text-sm tracking-wide hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/20 text-center"
+              className="w-full py-3.5 rounded-2xl bg-cyan-400 text-slate-950 font-bold text-sm tracking-wide hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-500/20 text-center"
             >
               Lancer cette séance
             </button>
