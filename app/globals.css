@@ -138,6 +138,39 @@ body {
   color: var(--text-secondary);
 }
 
+/* Styles globaux pour tous les champs de saisie (inputs, selects, textareas) */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  background-color: var(--bg-core);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--brand-cyan);
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
 /* Navigation Top bar des sous-pages */
 .screen-top-bar {
   display: flex;
@@ -317,21 +350,6 @@ body {
   gap: 8px;
 }
 
-.search-food-box input {
-  width: 100%;
-  background: var(--bg-core);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  outline: none;
-}
-
-.search-food-box input:focus {
-  border-color: var(--brand-cyan);
-}
-
 .food-search-dropdown {
   position: absolute;
   top: 100%;
@@ -385,17 +403,6 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.portion-input-row input {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  width: 90px;
-  font-size: 13px;
-  outline: none;
 }
 
 .btn-primary {
