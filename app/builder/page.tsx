@@ -11,19 +11,16 @@ interface CustomExercise {
 }
 
 export default function CustomWorkoutBuilder() {
-  const [workoutTitle, setWorkoutTitle] = useState('Ma Séance Personnalisée');
+  const [workoutTitle, setWorkoutTitle] = useState('Push lourd & Abdos');
   const [workoutLieu, setWorkoutLieu] = useState<'salle' | 'street' | 'maison'>('salle');
   const [reposSerie, setReposSerie] = useState<number>(60);
   const [reposExo, setReposExo] = useState<number>(90);
 
-  const [exercises, setExercises] = useState<CustomExercise[]>([
-    { id: '1', nom: 'Développé Couché', series: 4, reps: '8-10' },
-    { id: '2', nom: 'Écartés Poulie Vis-à-Vis', series: 3, reps: '12-15' },
-  ]);
+  const [exercises, setExercises] = useState<CustomExercise[]>([]);
 
   const [exoName, setExoName] = useState('');
   const [exoSeries, setExoSeries] = useState<number>(3);
-  const [exoReps, setExoReps] = useState<string>('10');
+  const [exoReps, setExoReps] = useState<string>('10-12');
 
   const handleAddExercise = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,14 +36,13 @@ export default function CustomWorkoutBuilder() {
     setExercises([...exercises, newExo]);
     setExoName('');
     setExoSeries(3);
-    setExoReps('10');
+    setExoReps('10-12');
   };
 
   const handleRemoveExo = (id: string) => {
     setExercises(exercises.filter(e => e.id !== id));
   };
 
-  // Calcul dynamique des métriques
   let totalSeconds = 0;
   let totalSets = 0;
   exercises.forEach((exo, idx) => {
@@ -76,57 +72,60 @@ export default function CustomWorkoutBuilder() {
       </div>
 
       <div className="screen-heading">
-        <h2>Constructeur de Routine</h2>
-        <p>Conçois ton propre entraînement personnalisé exercice par exercice.</p>
+        <h2>Créer ma séance</h2>
+        <p>Assemble tes mouvements et définis tes volumes d'effort.</p>
       </div>
 
-      {/* Paramètres généraux de la séance */}
-      <div className="modern-card flex flex-col gap-3">
-        <h3 className="text-sm font-bold">Paramètres de la séance</h3>
-        
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-semibold text-[var(--text-secondary)]">Nom du programme</label>
+      {/* Paramètres de la séance */}
+      <div className="modern-card flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-slate-300">Nom de la séance</label>
           <input
             type="text"
             value={workoutTitle}
             onChange={(e) => setWorkoutTitle(e.target.value)}
-            className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2.5 rounded-[var(--radius-sm)] text-xs outline-none focus:border-[var(--brand-cyan)]"
+            placeholder="Ex. : Push lourd & Abdos"
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 transition-all placeholder:text-slate-600"
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
-          {(['salle', 'street', 'maison'] as const).map(l => (
-            <button
-              key={l}
-              onClick={() => setWorkoutLieu(l)}
-              className={`py-2 text-xs font-bold uppercase rounded-[var(--radius-sm)] border transition-all ${
-                workoutLieu === l
-                  ? 'bg-[var(--brand-cyan)] text-[#04202c] border-[var(--brand-cyan)]'
-                  : 'bg-[var(--bg-core)] text-[var(--text-secondary)] border-[var(--border-subtle)]'
-              }`}
-            >
-              {l}
-            </button>
-          ))}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-bold text-slate-300">Lieu d'entraînement</label>
+          <div className="grid grid-cols-3 gap-2">
+            {(['salle', 'street', 'maison'] as const).map(l => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setWorkoutLieu(l)}
+                className={`py-2.5 text-xs font-bold uppercase rounded-xl border transition-all ${
+                  workoutLieu === l
+                    ? 'bg-emerald-400 text-slate-950 border-emerald-400 shadow-md shadow-emerald-400/20'
+                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mt-1">
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-[var(--text-secondary)]">Repos / série (sec)</label>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold text-slate-300">Repos / série (sec)</label>
             <input
               type="number"
               value={reposSerie}
               onChange={(e) => setReposSerie(parseInt(e.target.value) || 30)}
-              className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2 rounded-[var(--radius-sm)] text-xs outline-none"
+              className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white outline-none focus:border-cyan-400"
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-[var(--text-secondary)]">Repos / exo (sec)</label>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold text-slate-300">Repos / exo (sec)</label>
             <input
               type="number"
               value={reposExo}
               onChange={(e) => setReposExo(parseInt(e.target.value) || 60)}
-              className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2 rounded-[var(--radius-sm)] text-xs outline-none"
+              className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white outline-none focus:border-cyan-400"
             />
           </div>
         </div>
@@ -136,85 +135,87 @@ export default function CustomWorkoutBuilder() {
       <div className="modern-card tracker-summary-card">
         <div className="flex justify-around items-center text-center">
           <div>
-            <span className="stat-label">Durée Estimée</span>
-            <span className="text-lg font-bold text-[var(--brand-cyan)]">{estimatedMinutes} min</span>
+            <span className="stat-label">Durée estimée</span>
+            <span className="text-base font-bold text-cyan-400">{estimatedMinutes} min</span>
           </div>
-          <div className="w-[1px] h-8 bg-[var(--border-subtle)]" />
+          <div className="w-[1px] h-8 bg-slate-800" />
           <div>
-            <span className="stat-label">Dépense Brute</span>
-            <span className="text-lg font-bold text-[var(--brand-primary)]">~{estimatedCalories} kcal</span>
+            <span className="stat-label">Dépense brute</span>
+            <span className="text-base font-bold text-emerald-400">~{estimatedCalories} kcal</span>
           </div>
-          <div className="w-[1px] h-8 bg-[var(--border-subtle)]" />
+          <div className="w-[1px] h-8 bg-slate-800" />
           <div>
             <span className="stat-label">Exercices</span>
-            <span className="text-lg font-bold text-[var(--text-primary)]">{exercises.length}</span>
+            <span className="text-base font-bold text-white">{exercises.length}</span>
           </div>
         </div>
       </div>
 
-      {/* Formulaire d'ajout d'exercice */}
-      <div className="modern-card">
-        <h3 className="text-sm font-bold mb-3">Ajouter un exercice</h3>
-        <form onSubmit={handleAddExercise} className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-[var(--text-secondary)]">Mouvement</label>
-            <input
-              type="text"
-              placeholder="Ex: Tractions, Squat, Dips..."
-              value={exoName}
-              onChange={(e) => setExoName(e.target.value)}
-              className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2.5 rounded-[var(--radius-sm)] text-xs outline-none focus:border-[var(--brand-cyan)]"
-              required
-            />
-          </div>
+      {/* Ajouter un exercice */}
+      <div className="modern-card flex flex-col gap-4">
+        <h3 className="text-sm font-bold text-white">Ajouter un exercice</h3>
+        
+        <div className="flex flex-col gap-1.5">
+          <input
+            type="text"
+            placeholder="Nom du mouvement"
+            value={exoName}
+            onChange={(e) => setExoName(e.target.value)}
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 transition-all placeholder:text-slate-600"
+          />
+        </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold text-[var(--text-secondary)]">Séries</label>
-              <input
-                type="number"
-                value={exoSeries}
-                onChange={(e) => setExoSeries(parseInt(e.target.value) || 1)}
-                min={1}
-                className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2.5 rounded-[var(--radius-sm)] text-xs outline-none"
-                required
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold text-[var(--text-secondary)]">Répétitions / Format</label>
-              <input
-                type="text"
-                value={exoReps}
-                onChange={(e) => setExoReps(e.target.value)}
-                placeholder="Ex: 10 ou 45 sec"
-                className="bg-[var(--bg-core)] border border-[var(--border-subtle)] text-[var(--text-primary)] p-2.5 rounded-[var(--radius-sm)] text-xs outline-none"
-                required
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="btn-primary py-2.5 text-xs font-bold mt-1">
-            Ajouter à la liste
+        <div className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
+          <input
+            type="number"
+            placeholder="Séries (1-8)"
+            value={exoSeries === 0 ? '' : exoSeries}
+            onChange={(e) => setExoSeries(parseInt(e.target.value) || 0)}
+            min={1}
+            max={8}
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 placeholder:text-slate-600"
+          />
+          <input
+            type="text"
+            placeholder="Reps (ex. : 10-12)"
+            value={exoReps}
+            onChange={(e) => setExoReps(e.target.value)}
+            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 placeholder:text-slate-600"
+          />
+          <button
+            type="button"
+            onClick={handleAddExercise}
+            className="h-[46px] w-[46px] rounded-2xl bg-emerald-400 text-slate-950 font-black text-lg flex items-center justify-center hover:bg-emerald-300 transition-all shadow-lg shadow-emerald-400/20 flex-shrink-0"
+            title="Ajouter l'exercice"
+          >
+            +
           </button>
-        </form>
+        </div>
       </div>
 
-      {/* Liste des exercices de la séance */}
-      <div className="modern-card">
-        <h4 className="text-sm font-bold mb-3">Mouvements de la séance ({exercises.length})</h4>
+      {/* Mouvements enregistrés */}
+      <div className="modern-card flex flex-col gap-3">
+        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Exercices enregistrés ({exercises.length})
+        </h4>
+
         <ul className="styled-item-list">
           {exercises.length === 0 ? (
-            <li className="text-[var(--text-tertiary)] justify-center py-4">Aucun exercice ajouté pour l'instant.</li>
+            <li className="text-slate-500 justify-center py-4 text-xs">Aucun exercice enregistré.</li>
           ) : (
             exercises.map((item, idx) => (
-              <li key={item.id} className="flex justify-between items-center">
+              <li key={item.id} className="flex justify-between items-center bg-slate-950 border border-slate-800 p-3.5 rounded-2xl">
                 <div>
-                  <b>{idx + 1}. {item.nom}</b>
-                  <span className="text-[11px] text-[var(--text-secondary)] block">
-                    {item.series} séries × {item.reps}
+                  <span className="font-bold text-white text-xs">{idx + 1}. {item.nom}</span>
+                  <span className="text-[11px] text-slate-400 block mt-0.5">
+                    {item.series} séries × {item.reps} reps
                   </span>
                 </div>
-                <button onClick={() => handleRemoveExo(item.id)} className="delete-food-btn" title="Supprimer">
+                <button 
+                  onClick={() => handleRemoveExo(item.id)} 
+                  className="w-7 h-7 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-rose-400 flex items-center justify-center text-xs transition-colors" 
+                  title="Supprimer"
+                >
                   ✕
                 </button>
               </li>
@@ -223,8 +224,11 @@ export default function CustomWorkoutBuilder() {
         </ul>
 
         {exercises.length > 0 && (
-          <button onClick={handleSaveWorkout} className="hero-cta text-center justify-center mt-4">
-            Sauvegarder cette séance sur mesure
+          <button
+            onClick={handleSaveWorkout}
+            className="w-full py-4 rounded-2xl bg-emerald-400 text-slate-950 font-extrabold text-sm tracking-wide hover:bg-emerald-300 transition-all shadow-lg shadow-emerald-400/20 text-center mt-2"
+          >
+            Valider la séance
           </button>
         )}
       </div>
